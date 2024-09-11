@@ -1,0 +1,67 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+html {
+  scroll-behavior: smooth;
+
+  // This defines what 1rem is поэтому оставили здесь
+  font-size: 62.5%; //1rem = 10px; 10px/16px=62.5%
+  // Это тоже самое, что и нижние но с использованием миксинов
+  // @media (max-width: 600px){
+  //   font-size: 50%;
+  // }
+  // @include respond-phone{
+  //   //Мы преобразуем контект(часть кода ) в миксин
+  //   // И весь этот код которые будет написан здесь, будет вызываться в миксинах в @content
+  //   font-size: 50%;
+  // }
+
+  // Делаем media query с помощью  if
+  // Так как у phone и tab-port одинаковые значения( то есть если допустим значение 500px то подойдут значения <600 и <900), мы можем убрать запрос для phone
+  // но лучше его добавить в самый низ чтобы он первоочереднее применялся когда значения ближе к нему
+  //Чтобы свойтсво применялись правильно. Для большего значения нужно высталять превее чем для меньшего
+  @include respond(tab-land) {
+    //width < 1200px
+    font-size: 60%; // Здесь допустим хотим чтобы 1 rem =9px, 9/16=56.25%%
+  }
+  @include respond(tab-port) {
+    //width < 900px
+    font-size: 50%; // Здесь допустим хотим чтобы 1 rem =8px, 8/16=50%
+  }
+  // Может изза этого тупит
+  @include respond(phone) {
+    font-size: 30%; //1rem =4.8px
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75%; //Здесь допустим хотим чтобы 1 rem =12px, 12/16 = 75%
+  }
+}
+
+body {
+  // Закоментируем ниже кроме bpx-sizing, так как это отностися  к typography и мы поместили это туда
+  // font-family: "Lato", sans-serif;
+  // font-weight: 400;
+  // font-size: 1.6rem;
+  // line-height: 1.7;
+  // color: $color-grey-dark;
+
+  // /* Белый оступ по краям */
+  padding: 3rem;
+  box-sizing: border-box;
+
+  @include respond(tab-port) {
+    padding: 0;
+  }
+}
+
+// Делаем свой стиль для выделения мишью текста
+// С помощью псеввдоэлемента
+::selection {
+  background-color: $color-primary;
+  color: $color-white;
+}

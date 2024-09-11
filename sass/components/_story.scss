@@ -1,0 +1,106 @@
+.story{
+  width: 75%;
+  margin: 0 auto;
+  box-shadow: 0 3rem 6rem rgba($color-black,.1);
+  background-color: rgba($color-white, .6);
+  border-radius: 3px;
+  padding: 6rem;
+  padding-left: 9rem;
+  font-size: $default-font-size;
+  transform: skewX(-12deg);
+
+  // Так как мы применяли в &__shape свойство transform мы не можем применить ко всем дочерним элементам и зделать обрытный перекос. Поэтому Сейчас будем прописывать данное свойство каждому дочернему элементу
+  // &>*{
+  //   transform: skewX(12deg);
+  // }
+
+  @include respond(tab-port){
+    width: 100%;
+    padding: 4rem;
+    padding-left: 7rem;
+  }
+
+  @include respond(phone){
+    transform: skewX(0);
+  }
+
+
+&__shape{
+  width: 15rem;
+  height: 15rem;
+  float: left;
+  // Делаем круг с помощью shape-outside: polygon();
+  // 1- значение это радиус 50%- от размера элемента и 50% от вертикали и 50% по горизонтали от элемента
+  // --webkit-shape-outside: circle(50% at 50% 50%);
+  // shape-outside: circle(50% at 50% 50%);
+  // // CSS свойство clip-path создаёт ограниченную область, которая определяет какая часть элемента должна быть видимой. Те части, которые находятся внутри области, видимы, в то время как части вне области, скрыты.
+  // --webkit-clip-path:  circle(50% at 50% 50%);
+  // clip-path: circle(50% at 50% 50%);
+  // Чтобы отодвинуть элемент от текста мы можем также испльзовать свойство transorm: translate
+  transform: translateX(-3rem) skewX(12deg);
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+
+  // Запрос будет применится ли свойство
+  // И если применятся то можем часть свойств изменить 
+  @supports (clip-path: polygon(0 0 )) or (--webkit-clip-path:polygon(0 0)){
+    --webkit-clip-path:  circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+    --webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%);
+    border-radius: none;
+  }
+
+  @include respond(phone){
+    transform: translateX(-3rem) skewX(0);
+  }
+
+}
+
+&__img{
+height:100%;
+// Сдвигаем картинку за фигурой  и изначально ее увелими,  п при наведнии на историю, она уменьшиться 
+transform: translateX(-4rem) scale(1.4);
+backface-visibility: hidden;
+transition: all .5s;
+
+}
+
+
+&__text{
+  transform: skewX(12deg);
+  @include respond(phone){
+    transform: skewX(0);
+  }
+}
+
+&__caption{
+  // Текст на картинке делаем прозрачным и чть ниже цента
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,20%);
+  color: $color-white;
+  font-size: 1.7rem;
+  text-align: center;
+  opacity: 0;
+  transition: all .5s;
+  backface-visibility: hidden;
+}
+
+// Когда наводим на стори ,будет менять имг 
+&:hover &__caption{
+  opacity: 1;
+  //  Придется писать по обеим осям так как если написать только Y то корректно работать не будет 
+  transform: translate(-50%,-50%);
+}
+
+// Когда наводим на историю будет менять имг
+&:hover &__img{
+  transform: translateX(-4rem) scale(1);
+  // Размылили и уменьшили яркость до 80% то есть сделали темнее
+  filter: blur(3px) brightness(80%);
+}
+
+}

@@ -1,0 +1,63 @@
+/*  ДЛЯ БОЛЕЕ ПРОДВИНУТОЙ АНИМАЦИИ ИСПОЛЬЗУЕМ СВОЙСТВО @HEYFRAMES */
+
+/* moveInLeft  придумываем название для анимации */
+@keyframes moveInLeft {
+  /* Начало анимации */
+  0% {
+    /* В начале элемент будет прорачный */
+    opacity: 0;
+    /* Задаем откуда будет начинаться наша анимация и по какой оси */
+    transform: translateX(-10rem);
+  }
+
+  /* 60% {
+    ПОзволяет поворачивтаь на определенный градус
+    transform: rotate(180deg);
+  } */
+
+  /* Описываем анимацию когда положение в данном % */
+  /* положение элемента спеститься на 10 пикселей а в конце при 100% вернется на место */
+
+  80% {
+    transform: translateX(1rem);
+  }
+
+  /* Конец анимации */
+  100% {
+    /* В концу элемент будет видимый */
+    opacity: 1;
+    /* Конечное положение элемента(где будет стоять после окончания анимации) */
+    transform: translate(0);
+    /* transform: rotate(360deg); */
+  }
+}
+
+@keyframes moveInRight {
+  /* Начало анимации */
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+
+  80% {
+    transform: translateX(-1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInBottom {
+  /* Начало анимации */
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}

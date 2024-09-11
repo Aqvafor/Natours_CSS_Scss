@@ -1,0 +1,207 @@
+.navigation {
+  &__checkbox {
+    display: none;
+  }
+  &__button {
+    // Мы прописываем top and right по 6 rem так как размер изначально 7  rem, а в __background размер 6 и топ и райгхт 6.5 rem.
+    // Получается что элемент своим размером покроет так как на 1 рэм больше  и 6.5rem; будет до 6  7 рэм одинаково
+    background-color: $color-white;
+    height: 7rem;
+    width: 7rem;
+    position: fixed;
+    top: 6rem;
+    right: 6rem;
+    border-radius: 50%;
+    z-index: 2000;
+    box-shadow: 0 1rem 3rem rgba($color-black, 0.1);
+    text-align: center;
+    cursor: pointer;
+
+    // Меняем местоположение кнопки при 900 px  чтобы была выше и правее 
+    @include respond(tab-port){
+      top: 4rem;
+      right: 4rem;
+    }
+
+
+    @include respond(phone){
+      top: 3rem;
+      right: 3em;
+    }
+
+  }
+  // Начинаем с белого кружка
+  &__background {
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+    //  БУДЕТ НАХОДИТЬСЯ НА ОРПЕДЕЛЕННОМ УЧАСТКЕ ЭКРАННА
+    position: fixed;
+    top: 6.5rem;
+    right: 6.5rem;
+    // Используем другой градиент, который идет от центра к другим углам, а не от 1края до другого как в линейном
+    background-image: radial-gradient(
+      $color-primary-light,
+      $color-primary-dark
+    );
+    z-index: 1000;
+    // Анимируем переход чека меню
+    // cubic-bezier() используем данное свойство , которое нам позволяет саммим прописать гдеанимация должна ускоряться замедляться и т.д.п.
+    // Используются обычно генераторы в интернете и скопировав оттуда значение вставим сюда
+    transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+
+    // когда навигация будет открыта мы будем увеличивать
+    // transform: scale(80);
+
+    @include respond(tab-port){
+      top: 4.5rem;
+      right: 4.5rem;
+    }
+
+    @include respond(phone){
+      top: 3.5rem;
+      right: 3.5em;
+    }
+  }
+  // Занимаем навигацией весь экран
+  &__nav {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1500;
+
+    // Так мы спрячем от виду ссылки, но на них все равно можно будет ажать и выбрать
+    opacity: 0;
+    // ПОэтому width:0
+    width: 0;
+    // Анимируем вовзращение ссылок при нажатии на меню
+    transition: all.8s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  }
+  // центрируем элементы меню
+  &__list {
+    @include absolutCentr;
+    list-style: none;
+    text-align: center;
+    // Добавляем ширину, чтобы при анимации кнопки справой стороны экрана не выходили
+    width: 100%;
+  }
+  &__item { 
+    margin: 1rem;
+  }
+  &__link {
+    &:link,
+    &:visited {
+      display: inline-block;
+      font-size: 3rem;
+      font-weight: 300;
+      padding: 1rem 2rem;
+      color: $color-white;
+      text-decoration: none;
+      text-transform: uppercase;
+      // Анимацию для ссылок навигации создадим при помощи solid gradient
+      background-image: linear-gradient(
+        120deg,
+        transparent 0%,
+        transparent 50%,
+        $color-white 50%
+      );
+      // Увеличивая данное свойтсво в инструменте разработчика белый фон будет уходить вправо . И видно будет только красный цвет
+      background-size: 230%;
+      transition: all 0.4s;
+
+      span {
+        margin-right: 1.5rem;
+        display: inline-block;
+      }
+    }
+
+    &:hover,
+    &:active {
+      // Левый цвет начнет вовзращаться на место и покроет красный, То есть пойдет сдвиг справа налево
+      background-position: 100%;
+      // Делаем текст темныйм, так как белый фон покроет элемент
+      color: $color-primary;
+      // Чтобы чтобы кнопка чуть сдвигалась
+      transform: translateX(1rem);
+    }
+  }
+
+  // FUNCTIONALITy
+  // Хак с checkbox мы выбиираем элемент с псевдоклассом __checkbox:checked  и затем выбираем родственика &__background и прописываем что бдуем делать . Теперь мы можем включать и выключать chekbox
+  &__checkbox:checked ~ &__background {
+    // Увеличим экран навигации
+    transform: scale(80);
+  }
+
+  // Также чтобы появились элементы навигации придерживаемся того же принципа
+  &__checkbox:checked ~ &__nav {
+    // Возвращаем значение opacity-1 и width100%
+    opacity: 1;
+    width: 100%;
+  }
+
+  //  ICON
+  &__icon {
+    // Выбираем вначале сам эемент, потом раньше, затем позже 
+    // Выравниванием с помощью text-align-center в __button
+    position: relative;
+    // Вставляем в кружок навигации созданую нами иконку 
+    margin-top: 3.5rem;
+    &,
+    &::before,
+    &::after{
+      width: 3rem;
+      height: 2px;
+      background-color: $color-grey-dark-3;
+      display: inline-block;
+    }
+
+    &::before,
+    &::after{
+      // Так как это псевдоэлементы у них всегда должен быть контент 
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all .2s;
+    }
+
+    // Расставляем элементы, 1 ниже спана, второй выше
+    // &::before{top: -.8rem; transform-origin:right}
+    // transform-origin:right Определит с какого края элемента начентся вращениеюПолезное свойтсво если нам надо повернуть в определенном направлении, но сейчас оно нам не понадобится
+    &::before{top: -.8rem;}
+    &::after{top: .8rem;}
+
+  }
+
+
+  // Анимируем чтобы расстояние чутка увеличиволось при наведении
+  // &__icon child elemt of __button
+  &__button:hover &__icon::before{
+    top: -1rem
+  }
+
+  &__button:hover &__icon::after{
+    top: 1rem
+  }
+
+  // Здесь используем + так как это ближайший родственик
+  // Когда элемент checked мы выбираем брата(близжайшего родственика) sibiling element . А потом к дочерниму элементу &__icon этого родственика &__button 
+&__checkbox:checked + &__button &__icon{
+  // исчезнет span элемент, и останутся только его псевдоклассы -2 черточки
+  background-color: transparent;
+}
+
+// Обращаемся к псевдоэлементам и менем высоту чтобы получился крес при вращении на градусы. Это определяется с помощью инструментов и не быстро 
+// Используем 135 чтобы они пересеклись при 45 граудсов такого бы не было 
+&__checkbox:checked + &__button &__icon::before{
+  top: 0;
+  transform: rotate(135deg);
+}
+
+&__checkbox:checked + &__button &__icon::after{
+  top: 0;
+  transform: rotate(-135deg);
+}
+
+}

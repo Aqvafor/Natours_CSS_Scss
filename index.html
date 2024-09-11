@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+a
+    <!-- Так как мы добавили в json файл, нам эта строка тут не нужна -->
+    <!-- Так как мы убрали эту строчку иконок не будет видно, но когда будем компилировать через npm то они появится, так как мы добавили нужный css файл -->
+    <!-- <link rel="stylesheet" href="css/icon-font.css"> -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+    <script defer src="js/script.js"></script>
+
+    <title>Natours | Exciting tours for adventurous people</title>
+</head>
+
+<body>
+
+    <div class="navigation">
+        <!-- Используем checkbox хак применять его без js  -->
+        <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+
+        <label for="navi-toggle" class="navigation__button">
+            <!-- Сами зделаем знаок меню используя линию и две линии созданные с помощью псевдоэлемента -->
+            <span class="navigation__icon">&nbsp;</span>
+        </label>
+
+        <!-- &nbsp; пустота  -->
+        <div class="navigation__background">&nbsp;</div>
+
+        <nav class="navigation__nav">
+            <ul class="navigation__list">
+                <li class="navigation__item"><a href="#about" class="navigation__link"><span>01</span>About Natours</a></li>
+                <li class="navigation__item"><a href="#features" class="navigation__link"><span>02</span>Your benefits</a></li>
+                <li class="navigation__item"><a href="#tours" class="navigation__link"><span>03</span>Popular tours</a></li>
+                <li class="navigation__item"><a href="#stories" class="navigation__link"><span>04</span>Stories</a></li>
+                <li class="navigation__item"><a href="#book" class="navigation__link"><span>05</span>Book now</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <!-- КАК БЫЛО ДО BEM -->
+    <!-- <header class="header">
+        <div class="logo-box">
+            <img src="img/logo-white.png" alt="Logo" class="logo">
+        </div>
+
+        <div class="text-box">
+            <h1 class="heading-primary">
+                <span class="heading-primary-main">outdoors</span>
+                <span class="heading-primary-sub">ois where life happens</span>
+            </h1>
+
+            <a href="#" class="btn btn-white btn-animated">Discover our toors</a>
+        </div>
+
+    </header> -->
+
+    <!-- bem используем block element modifier(модификатор) -->
+    <header class="header ">
+        <!-- Здесь BLOCK так что добавляем header__  нижние подчеркивания-->
+        <div class="header__logo-box">
+            <img src="img/logo-white.png" alt="Logo" class="header__logo">
+        </div>
+
+
+        <div class="header__text-box">
+            <!-- Ниже ELEMENT  standalone (автономный) block -->
+            <h1 class="heading-primary">
+                <!-- Здесь MODIFIER поэтому добавляем два тирэ --main -->
+                <span class="heading-primary--main">outdoors</span>
+                <span class="heading-primary--sub">ois where life happens</span>
+            </h1>
+            <!-- Ниже btn ELEMENT  standalone (автономный) block 
+           но у данноо эемента есть  и modifier  btn--white btn--animated -->
+            <a href="#" class="btn btn--white btn--animated">Discover our toors</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-about" id="about">
+            <div class="u-center-text u-margin-bottom-big">
+                <h2 class="heading-secondary">
+                    Exciting tours for adventurous people
+                </h2>
+            </div>
+
+            <div class="row">
+                <div class="col-1-of-2">
+                    <h3 class="heading-tertiary u-margin-bottom-small">
+                        You're goig to fall in love with nature
+                    </h3>
+                    <p class="paragraph">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore iure sint iusto deleniti
+                        asperiores? Nobis corrupti facere deserunt exercitationem sed.
+                    </p>
+                    <h3 class="heading-tertiary u-margin-bottom-small">
+                        Live adventures like you never have before
+                    </h3>
+                    <p class="paragraph">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore iure sint iusto deleniti
+                        asperiores? Nobis corrupti facere deserunt exercitationem sed.
+                    </p>
+
+                    <a href="#" class="btn-text">Learn more &rarr;</a>
+                </div>
+                <div class="col-1-of-2">
+                    <!--  .composition>(img.composition__photo.composition__photo--p1)*3  Создаст див с тремя элементами имг с классами внутри-->
+                    <div class="composition">
+
+<!-- Позволяем браузеру выбрать картинку в зависимоти от качетсва экрана и его разрешения  мы используем width descriptor(описываем ширину )
+300w это значит 300 рх 
+Мы информируем браузер какуя ширина этих изображений,  без скачивания браузером этих картинок 
+Но это не досаточно для ббраузера, чтобы определить какое изображение надо скачивать 
+Для ршения этой проблемы мы используем атрибут sizes
+vw- ширина экрана которую видим view width мы ее определяем с помощью данного метода. Мы смотрим в инструменте разработчика, какая ширина картинки и делим ее на ширину . 900/171 получится 19vw но мы округлим до 20, при ширине 600 размер картинки остался таким же и поэтому 171/600 0.28 cktljdfntkmyj 28?vw но возьмем 30 
+Также в конце надо указать дефолтный размер -->
+<!-- Конвертируем 600 рх в 37ю5 емб и 900.16=56ю25 em -->
+<img srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w" alt="Photo 1"
+sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px" class="composition__photo composition__photo--p1"
+src="img/nat-1-large.jpg">
+<!-- Но некоторые браузеры не поодреживают данные команды поэтому, надо будет использовать scr в img и указать путь к картинке лучшей , как делали это в footer  -->
+<img srcset="img/nat-1.jpg 300w, img/nat-2-large.jpg 1000w" alt="Photo 2"
+sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px" class="composition__photo composition__photo--p2"
+src="img/nat-2-large.jpg">
+<img srcset="img/nat-1.jpg 300w, img/nat-3-large.jpg 1000w" alt="Photo 3"
+sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px" class="composition__photo composition__photo--p3"
+src="img/nat-3-large.jpg">
+<!-- ЧТобы посмотреть что именно применилосб, мы можем посмотреть в итрументе разработика  в кладке properties, но до этого, надо будет выбрать картинку с помощью inspect  -->
+
+
+
+<!-- Без отзывчивостив картинках -->
+                        <!-- <img src="img/nat-1-large.jpg" alt="Photo 1" class="composition__photo composition__photo--p1">
+                        <img src="img/nat-2-large.jpg" alt="Photo 2" class="composition__photo composition__photo--p2">
+                        <img src="img/nat-3-large.jpg" alt="Photo 3" class="composition__photo composition__photo--p3"> -->
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="section-features" id="features">
+            <div class="row">
+                <div class="col-1-of-4">
+                    <div class="feature-box">
+                        <i class="icon-basic-world feature-box__icon"></i>
+                        <h3 class="heading-tertiary u-margin-bottom-small">Explore the world</h3>
+                        <p class="feature-box__text">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat odit necessitatibus
+                            facilis
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-1-of-4">
+                    <div class="feature-box">
+                        <i class="icon-basic-compass feature-box__icon"></i>
+                        <h3 class="heading-tertiary u-margin-bottom-small">Meet nature</h3>
+                        <p class="feature-box__text">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat odit necessitatibus
+                            facilis
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-1-of-4">
+                    <div class="feature-box">
+                        <i class="icon-basic-map feature-box__icon"></i>
+                        <h3 class="heading-tertiary u-margin-bottom-small">Find your way</h3>
+                        <p class="feature-box__text">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat odit necessitatibus
+                            facilis
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-1-of-4">
+                    <div class="feature-box">
+                        <i class="icon-basic-heart feature-box__icon"></i>
+                        <h3 class="heading-tertiary u-margin-bottom-small">Live a healthier life</h3>
+                        <p class="feature-box__text">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat odit necessitatibus
+                            facilis
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section class="section-tours" id="tours">
+
+            <div class="u-center-text u-margin-bottom-big">
+                <h2 class="heading-secondary">
+                    Most popular tours
+                </h2>
+            </div>
+
+            <div class="row">
+                <div class="col-1-of-3">
+                    <div class="card">
+                        <div class="card__side card__side--front">
+                            <div class="card__picture card__picture--1">
+                                <!--  &nbsp; пустое место  -->
+                                &nbsp;
+                            </div>
+                            <h4 class="card__heading">
+                                <span class="card__heading--span card__heading--span--1">
+                                    The sea explorer
+                                </span>
+                            </h4>
+                            <div class="card__detalis">
+                                <ul>
+                                    <li>3 day tours</li>
+                                    <li>Up to 30 people</li>
+                                    <li>2 tour guides</li>
+                                    <li>Sleep in cozy hotels</li>
+                                    <li>Difficulty: easy</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card__side card__side--back card__side--back-1">
+                            <div class="card__cta">
+                                <div class="card__price-box">
+                                    <p class="card__price-only">Only</p>
+                                    <p class="card__price-value">$297</p>
+                                </div>
+                                <a href="#popup" class="btn btn--white">Book now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1-of-3">
+                    <div class="card">
+                        <div class="card__side card__side--front">
+                            <div class="card__picture card__picture--2">
+                                <!--  &nbsp; пустое место  -->
+                                &nbsp;
+                            </div>
+                            <h4 class="card__heading">
+                                <span class="card__heading--span card__heading--span--2">
+                                    The forest hiker
+                                </span>
+                            </h4>
+                            <div class="card__detalis">
+                                <ul>
+                                    <li>7 day tour</li>
+                                    <li>Up to 40 people</li>
+                                    <li>6 tour guides</li>
+                                    <li>Sleep in provides tents</li>
+                                    <li>Difficulty: medium</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card__side card__side--back card__side--back-2">
+                            <div class="card__cta">
+                                <div class="card__price-box">
+                                    <p class="card__price-only">Only</p>
+                                    <p class="card__price-value">$497</p>
+                                </div>
+                                <a href="#popup" class="btn btn--white">Book now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1-of-3">
+                    <div class="card">
+                        <div class="card__side card__side--front">
+                            <div class="card__picture card__picture--3">
+                                <!--  &nbsp; пустое место  -->
+                                &nbsp;
+                            </div>
+                            <h4 class="card__heading">
+                                <span class="card__heading--span card__heading--span--3">
+                                    The snow adventurer
+                                </span>
+                            </h4>
+                            <div class="card__detalis">
+                                <ul>
+                                    <li>5 day tours</li>
+                                    <li>Up to 15 people</li>
+                                    <li>3 tour guides</li>
+                                    <li>Sleep provides tents</li>
+                                    <li>Difficulty: hard</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card__side card__side--back card__side--back-3">
+                            <div class="card__cta">
+                                <div class="card__price-box">
+                                    <p class="card__price-only">Only</p>
+                                    <p class="card__price-value">$897</p>
+                                </div>
+                                <a href="#popup" class="btn btn--white">Book now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="u-center-text u-margin-top-huge">
+                <a href="#book" class="btn  btn--green">Discover all tours</a>
+            </div>
+
+        </section>
+
+        <section class="section-stories" id="stories">
+            <div class="bg-video">
+                <!-- Для источника src лучше использовать тэг, а не атрибут -->
+                <!-- muted чтобы не воспроизводился звук 
+                    loop чтобы видео зациклилось 
+                    autoplay  данный атрибут будет заставлять автоматически вопросизводиться видео. Обычно это не очнь хороший использование данного атрибута, но для фона на видео пойдет -->
+                <video class="bg-video__content" autoplay muted loop>
+                    <!-- Еще ндо будет указатьь формат видео в тэге type  -->
+                    <source src="img/video.mp4" type="video/mp4">
+                    <source src="img/video.webm" type="video/webm">
+                    <!-- Если оба типа видео не будут поддерживаться брааузером, то тогда выведется текст ниже -->
+                    Your browser is not supported!
+                </video>
+            </div>
+
+            <div class="u-center-text u-margin-bottom-big">
+                <h2 class="heading-secondary">
+                    We make people genuinely happy
+                </h2>
+            </div>
+
+            <div class="row">
+                <div class="story">
+                    <figure class="story__shape">
+                        <img src="img/nat-8.jpg" alt="Person on a tour" class="story__img">
+                        <figcaption class="story__caption">Mary Smith</figcaption>
+                    </figure>
+                    <div class="story__text">
+                        <h3 class="heading-tertiary u-margin-bottom-small">
+                            I had the best week ever with my family
+                        </h3>
+                        <p class="">
+                            Lorem ipsum dolor sit amet consectetur avdipisicing elit.Lorem ipsum dolor sit amet
+                            consectetur addipisicing elit.Lorem ipsum dolor sit met consectetur adipisicing elit
+                            Perspiciatis deleniti officia ullam culpa. Ipsa repudiandae, facere aspernatur nihil optio
+                            temporibus.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="story">
+                    <figure class="story__shape">
+                        <img src="img/nat-9.jpg" alt="Person on a tour" class="story__img">
+                        <figcaption class="story__caption">Jake Wilson</figcaption>
+                    </figure>
+                    <div class="story__text">
+                        <h3 class="heading-tertiary u-margin-bottom-small">
+                            Wow! My life is comlerely diffrent now
+                        </h3>
+                        <p class="">
+                            Lorem ipsum dolor sit amet consectetur avdipisicing elit.Lorem ipsum dolor sit amet
+                            consectetur addipisicing elit.Lorem ipsum dolor sit met consectetur adipisicing elit
+                            Perspiciatis deleniti officia ullam culpa. Ipsa repudiandae, facere aspernatur nihil optio
+                            temporibus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="u-center-text u-margin-top-huge">
+                <a href="#" class="btn-text">Read all stories &rarr;</a>
+            </div>
+
+        </section>
+
+        <section class="section-book" id="book">
+            <div class="row">
+                <div class="book">
+                    <div class="book__form">
+                        <form action="#" class="form">
+                            <div class="u-margin-bottom-medium">
+                                <h2 class="heading-secondary">
+                                    Start booking now
+                                </h2>
+                            </div>
+                            <div class="form__group">
+                                <!--  required Буде показывать что нужно обязательно заполнить данное поле -->
+                                <input type="text" class="form__input" placeholder="Full Name" id="name" required>
+                                <label for="name" class="form__label">Full name</label>
+                            </div>
+
+                            <div class="form__group">
+                                <!--  required Буде показывать что нужно обязательно заполнить данное поле -->
+                                <input type="email" class="form__input" placeholder="Email address" id="email" required>
+                                <label for="email" class="form__label">Email address</label>
+                            </div>
+
+                            <!-- ДЛЯ РАДИОИНПУТОВ СОЗДАЕМ ГРУППУ ДАВАЯ ИМ NAME ОБЩИЙ  -->
+                            <!-- И ТЕПЕРЬ ТОЛЬКО 1 ИЗ РАДИОИНПУТОВ МОЖЕТ БЫТЬ ВЫБРАН  -->
+
+                            <!-- Мы создадим свои кнопки поверх инпутов с поомщью span. А радиокнопки будут спрятаны  -->
+                            <div class="form__group u-margin-bottom-medium">
+                                <div class="form__radio-group ">
+                                    <input type="radio" class="form__radio-input" id="small" name="size">
+                                    <label for="small" class="form__radio-label">
+                                        <span class="form__radio-button"></span> Small tour group</label>
+                                </div>
+                                <div class="form__radio-group ">
+                                    <input type="radio" class="form__radio-input" id="large" name="size">
+                                    <label for="large" class="form__radio-label">
+                                        <span class="form__radio-button"></span></label>
+                                    Large tour group</label>
+                                </div>
+                            </div>
+
+
+
+
+                            <!-- ДЛЯ ПОЛЯ ФОРМЫ НУЖНУ РЕАЛЬНАЯ КНОПКА А НЕ ЯКОРНЫЙ ЭЛЕМЕНТ, ТАК КАК ЭТА КНОПКА ПОТВЕРЖДАЕТ ОТПРАВКУ ФОРМЫ -->
+                            <div class="form__group">
+                                <button class="btn btn--green">Next step &rarr;</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- Для того чтобы картинка выбралаь в зависимости от разрешения мы используем не src, f srcset -->
+    <footer class="footer">
+        <div class="footer__logo-box">
+<!-- ART DIRECTION Это значит отпределиться какая картинка подходит под какое разрешение. Для этогоиспользуется парный тэг picture -->
+<picture class="footer__logo">
+    <!-- В данном тэге должно использоваться хотя бы 1 изображения, а тэга source можт и не быть -->
+    <!-- В атрибут  media="" мы можем положить css media query
+    Будем использовать для телефона  -->
+    <!-- Мы выбрали экраны меньше 600рх и в тэге srcset выбрали картинку для такихэкранов  и в зависимости от разрешения экрана можно выбрать одну из двух картинок-->
+    <source srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x" media="(max-width: 37.5em)">
+    <img srcset ="img/logo-green-1x.png 1x,  img/logo-green-2x.png 2x" alt="Full logo" class="footer__logo" src="img/logo-green-2x.png">
+</picture>
+
+
+
+
+
+
+            <!-- И теперь мы можем обозначчить сразу две картинки -->
+            <!-- 1x и 2x это density descriptor -(описываем какая плотность) -->
+            <!-- Данный аттрибут srcset позволяет браузеру самому выбрать лучше изображени для пользователю В зависимоти от разрешени устройства(плохое или хорошее)
+            2х для лучшего разрешения -->
+            <!-- <img srcset ="img/logo-green-1x.png 1x,  img/logo-green-2x.png 2x" alt="Full logo" class="footer__logo"> -->
+        </div>
+        <div class="row">
+            <div class="col-1-of-2">
+                <div class="footer__navigation">
+                    <ul class="footer__list">
+                        <li class="footer__item"><a href="#" class="footer__link">Company</a></li>
+                        <li class="footer__item"><a href="#" class="footer__link">Contanct us</a></li>
+                        <li class="footer__item"><a href="#" class="footer__link">Carrers</a></li>
+                        <li class="footer__item"><a href="#" class="footer__link">Privacy policy</a></li>
+                        <li class="footer__item"><a href="#" class="footer__link">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-1-of-2">
+                <p class="footer__copyright">
+                    Built my <a href="#" class="footer__link">Jonas Schmedtmann</a> for his online course <a href="#"
+                        class="footer__link">Advanced CSS and Sass</a>. Copyright &copy; <span class="year">2027</span> by Jonas Schmedtmann. You are
+                    100%
+                    allowed to use this webpage for both personal and commercial use, but NOT to claim it as your own
+                    design. A credit to the original author, Jonas Schmedtmann, is of course highly appreciated!
+                </p>
+            </div>
+
+    </footer>
+
+    <!-- С помощью id aнкорне элементы мгут преходить к этому id  -->
+    <!-- Вписав сюжа id="popup" она автомачически становится tarhet псевдокласс -->
+    <div class="popup" id="popup">
+        <div class="popup__content">
+            <div class="popup__left">
+                <img srcset="img/nat-8.jpg 300w" alt="Tour photo"
+sizes="(max-width: 56.25em) 10vw, (max-width: 37.5em) 20vw, 300px" class="popup__img"
+src="img/nat-8.jpg">
+<img srcset="img/nat-9.jpg 300w" alt="Tour photo"
+sizes="(max-width: 56.25em) 10vw, (max-width: 37.5em) 20vw, 300px" class="popup__img"
+src="img/nat-9.jpg">
+                <!-- <img src="img/nat-8.jpg" alt="Tour photo" class="popup__img">
+                <img src="img/nat-9.jpg" alt="Tour photo" class="popup__img"> -->
+            </div>
+            <div class="popup__right">
+                <!-- Добавляем кнопку закрытия, и когда закрытие произойдет, экран будет на секции туров -->
+                <a href="#section-tours" class="popup__close">&times;</a>
+                <h2 class="heading-secondary u-margin-bottom-medium">Start booking now</h2>
+                <h3 class="heading-tertiary u-margin-bottom-small">Important &ndash; Please read these terms before booking</h3>
+                <p class="popup__text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos corporis est qui! Perspiciatis consectetur dolores harum, autem assumenda ullam consequatur fugit illo eum, quibusdam repudiandae,Perspiciatis
+                    consectetur dolores harum, autem assumenda ullam consequatur fugit consectetur dolores harum, autem assumenda ullam consequatur fugit illo eum, quibusdam repudiandae,Perspiciatis
+                    consectetur dolores harum, autem assumenda ullam 
+                    itaque praesentium! Ipsam, quasi esse aliquid tempore corrupti 
+                </p>
+                <a href="" class="btn btn--green">Book now</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRID
+        <section class="grid-test">
+        <div class="row">
+            <div class="col-1-of-2">
+                Col 1 of 2
+            </div>
+            <div class="col-1-of-2">
+                Col 1 of 2
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-1-of-3">
+                Col 1 of 3
+            </div>
+            <div class="col-1-of-3">
+                Col 1 of 3
+            </div>
+            <div class="col-1-of-3">
+                Col 1 of 3
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-1-of-3">
+                Col 1 of 3
+            </div>
+            <div class="col-2-of-3">
+                Col 2 of 3
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-1-of-4">
+                Col 1 of 4
+            </div>
+            <div class="col-1-of-4">
+                Col 1 of 4
+            </div>
+            <div class="col-1-of-4">
+                Col 1 of 4
+            </div>
+            <div class="col-1-of-4">
+                Col 1 of 4
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-1-of-4">
+                Col 1 of 4
+            </div>
+            <div class="col-1-of-4">
+                Col 1 of 4
+            </div>
+            <div class="col-2-of-4">
+                Col 2 of 4
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-1-of-4">
+                Col 1 of 4
+            </div>
+            <div class="col-3-of-4">
+                Col 3 of 4
+            </div>
+        </div>
+       
+    </section> -->
+
+</body>
+
+</html>

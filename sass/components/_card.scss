@@ -1,0 +1,266 @@
+// FUNCTIONALITY
+.card {
+  // define perspective называется определяем перспективу
+  perspective: 150rem;
+  --moz-perspective: 150rem;
+  position: relative;
+  height: 52rem;
+
+  &__side {
+    // Тестировали снизу как будут выглядеть карточки
+    // color: white;
+    // font-size: 2rem;
+
+    height: 52rem;
+    transition: all 0.8s ease;
+    // Для того чтобы 2 стороны находиись в одном месте, а не под друг другом в колонке
+    // Еще так как мы используем float (потоки) то высота у них рушится и надо делать clear.Но так как у нас поситион абсолют, мы не можем использовать clearfix поэтому назначем родительскому элементу такую же высоту
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    //Для правки плавной анимации, а то дергается во время переворачивания
+    // Для сафари пропишем webkit
+    --webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 3px;
+    // Выставляем значениев свойстве overflow: hidden; так как картинка покрывает родительский элемент
+    overflow: hidden;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+    &--front {
+      background-color: $color-white;
+    }
+
+    &--back {
+      // background-color: green;
+      // Задняя сторона изначальна повернута на 180 градусов
+      transform: rotateY(180deg);
+
+      &-1 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-secondary-light,
+          $color-secondary-dark
+        );
+      }
+      &-2 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-primary-light,
+          $color-primary-dark
+        );
+      }
+      &-3 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-tertiary-light,
+          $color-tertiary-dark
+        );
+      }
+    }
+  }
+
+  //.card:hover .card__side{
+  // Переворачиваем переднюю сторону, а задняя изначально повернута
+  &:hover &__side--front {
+    transform: rotateY(-180deg);
+  }
+
+  // Так как изначально задняя уже на 180 градусов, мы ее возвращаем на обратное значение поэтому 0
+  &:hover &__side--back {
+    transform: rotateY(0);
+  }
+
+  //FRONT SIDE STYLING
+  &__picture {
+    background-size: cover;
+    height: 23rem;
+    // Смешивает два свойства картинки и градиента background-blend-mode: ;
+    background-blend-mode: screen;
+    // Обрезаем картинку как в header
+    // CSS свойство clip-path создаёт ограниченную область, которая определяет какая часть элемента должна быть видимой. Те части, которые находятся внутри области, видимы, в то время как части вне области, скрыты. Обрезанная область - это траектория, определяемая либо как внутренняя ссылка, либо как внешний SVG , либо как фигура, такая как круг (circle()).
+    // Для того чтобы свойтсво работло на большинстве браузерахмы используем --webkit-
+    --webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    // clip-path ломает overflow поэтому, углы тоже overflowing . А элемент уже скрыт overflow :hidden у __side. Но когда мы используем clip-path overflow больше не работает и поэтому мы должны добавлять вручную
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+    &--1 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-secondary-light,
+          $color-secondary-dark
+        ),
+        url(../../img/nat-5.jpg);
+    }
+
+    &--2 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-primary-light,
+          $color-primary-dark
+        ),
+        url(../../img/nat-6.jpg);
+    }
+
+    &--3 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-tertiary-light,
+          $color-tertiary-dark
+        ),
+        url(../../img/nat-7.jpg);
+    }
+  }
+
+  &__heading {
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: right;
+    color: $color-white;
+    // Ставим текст поверх картинки
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+    width: 75%;
+  }
+
+  // Это не child верхнего,  целый новый элемент в BEM системе
+  &__heading--span {
+    // Разделяем текст на 2 строки
+    padding: 1rem 1.5rem;
+    // The box-decoration-break CSS property specifies how an element's fragments should be rendered when broken across multiple lines, columns, or pages.
+    // Свойство показывает как фрагменты должны быть сгенерерованы и где разъеденены линии, колонки и страницы
+    // Надо использоваь --webkit
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+
+    &--1 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-secondary-light, 0.85),
+        rgba($color-secondary-dark, 0.85)
+      );
+    }
+    &--2 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.85),
+        rgba($color-primary-dark, 0.85)
+      );
+    }
+    &--3 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-tertiary-light, 0.85),
+        rgba($color-tertiary-dark, 0.85)
+      );
+    }
+  }
+
+  &__detalis {
+    padding: 3rem;
+    ul {
+      list-style: none;
+      width: 80%;
+      margin: 0 auto;
+      li {
+        text-align: center;
+        font-size: 1.5rem;
+        padding: 1rem;
+        &:not(:last-child) {
+          border-bottom: 1px solid $color-grey-light-2;
+        }
+      }
+    }
+  }
+
+  //BACK SIDE STYLING
+  &__cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
+  }
+
+  &__price-box {
+    text-align: center;
+    color: $color-white;
+    margin-bottom: 8rem;
+  }
+
+  &__price-only {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+  }
+
+  &__price-value {
+    font-size: 6rem;
+    font-weight: 100;
+  }
+
+
+
+
+
+
+  // Так как в этом разделе надо практичски все переделать, то мы создадим медиа квери внизу
+  // Для сенсорных устройств нету состояния hover поэтому сделаем по другому 
+  // @include respond(tab-port){
+    // ТО есть когда экран меньше этого (так как перестанет быть карточка с другой стороны. Ну или когда сенсорное устройство
+    @media only screen and(max-width:56.25rem),
+    only screen and (hover:none) {
+    height: auto;
+    border-radius: 3px;
+    background-color: $color-white;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+  
+
+    &__side {
+      height: auto;
+      // Теперь позица\ия релатив, так как теперь нет двух сторон
+      position: relative;
+      // Убираем тень с данного элемента и переносим сверху на всю картчоку целиком 
+      box-shadow: none;
+
+  // Так как в у меньшеннорм размере мы не будет вереть карточки, то и обратно их переворачитьва не надо и ставим в позицию 0, чтобы была тоже сверху
+      &--back {
+        transform: rotateY(0);
+        // Делаем наклон фона, как сверху карточки
+clip-path: polygon(0 15%, 100% 0 , 100% 100%, 0 100%);
+      }
+    }
+
+    &:hover &__side--front {
+      transform: rotateY(0);
+    }
+
+    &__details{
+      padding: 1rem 3rem;
+    }
+
+  
+    //BACK SIDE STYLING
+    &__cta {
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: translate(0);
+      width: 100%;
+      padding:7rem 4rem 4rem 4rem;
+    }
+  
+    &__price-box {
+      margin-bottom: 3rem;
+    }
+  
+    &__price-value {
+      font-size: 4rem;
+    }
+  }
+}

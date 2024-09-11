@@ -1,0 +1,268 @@
+/* ДО СОЗДАНИЯ SCSS ФАЙЛА */
+
+/*
+COLORS:
+
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+*/
+
+/* *,
+*::after,
+*::before Если в добавок не выбрать псевдоэлементы,то к ним не будут применяться свойства  box-sizing:*/
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  /* Выоста и ширина боксов будет зависить от их ширины и высоты */
+  box-sizing: inherit;
+}
+
+html {
+  /* для того чтобы 10 рх = 1 rem */
+  /* Выставляется  font-size: 62.5%; для того чтобы когда значения менял юзер самого  rem в  html, как показано выше , ничего не ломалось*/
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: #777;
+
+  /* Белый оступ по краям */
+  padding: 3rem;
+}
+
+.header {
+  /* 95% поля которое увидим */
+  height: 95vh;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(126, 213, 111, 0.8),
+      rgba(40, 180, 133, 0.8)
+    ),
+    url(../img/hero.jpg);
+  /* Покрывает картинкой весь элемент в котором находиться */
+  background-size: cover;
+  /* Будет растягиваться от верхней части картинк */
+  background-position: top;
+  position: relative;
+
+  /* Отсекаем часть картинки, с помощьщю свойства  clip-path: polygon
+  В котором четыре координаты
+  (x y ,x y,x y ,x y)*/
+  /* 1ая координата- левый верхний угол
+  2ая координата правый верхний угол,
+  3ая координата правый нижний угол,
+  4ая координата левый нижний угол */
+  /* Так как мы указали 75% vh - view height высота обзора 75 %, то она тоже всегда будет изменятьс при изменении разрешения экрана */
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
+
+.header__logo-box {
+  position: absolute;
+  top: 4rem;
+  left: 4rem;
+}
+
+.header__logo {
+  /* У картинок можно определить одну из величин и исходя из нее браузер автоматически настраит второй параметр */
+  height: 3.5rem;
+  /* backface-visibility: hidden; */
+}
+
+/* Так делается анимация при наведении */
+/* .logo:hover {
+  animation: moveInRight 2s ease-out;
+} */
+
+/* СТавим элемент в центр с помощью абсолюта поситион */
+.header__text-box {
+  position: absolute;
+  /* Так как мы обрезали изображение сместим чуть выше центра */
+  top: 40%;
+  left: 50%;
+  /* Сразу не будет в центре, так как элемент начинается с 50 %ю По это пододвигаем сам элемент на 50% */
+  transform: translate(-50%, -50%);
+
+  /* Мы выравним кнопку с помощью выравнивания текста, так как там содержится текст */
+  text-align: center;
+}
+
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+  /* Можно и так сделаем по старинке */
+  /* display: flex;
+  flex-direction: column; */
+
+  /* чтобы элемент не трасся по время анимации мы используем свойтсво  backface-visibility: hidden; */
+  backface-visibility: hidden;
+  margin-bottom: 6rem;
+}
+.heading-primary--main {
+  display: block;
+  font-size: 6rem;
+  font-weight: 400;
+  letter-spacing: 3.5rem;
+
+  /* Используем ниже написанную анимацию с помощью  сввойства animation-name: ; */
+  animation-name: moveInLeft;
+  /* Время анимации */
+  animation-duration: 1s;
+
+  /* В данном свойстве можно выбрать где будет анимация замедляться или ускоряться, или  от и то другое */
+  animation-timing-function: ease-out;
+
+  /* Здесь прописываем раз  сколько анимациия должна повториться */
+  /* animation-iteration-count: 3; */
+
+  /* Задержка по времени перед началом анимации */
+  /* animation-delay: 3s;  */
+}
+.heading-primary--sub {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 17.4px;
+
+  /* Все свойства анимации можно прописаьт сразу */
+  animation: moveInRight 1s ease-out;
+}
+
+/*  ДЛЯ БОЛЕЕ ПРОДВИНУТОЙ АНИМАЦИИ ИСПОЛЬЗУЕМ СВОЙСТВО @HEYFRAMES */
+
+/* moveInLeft  придумываем название для анимации */
+@keyframes moveInLeft {
+  /* Начало анимации */
+  0% {
+    /* В начале элемент будет прорачный */
+    opacity: 0;
+    /* Задаем откуда будет начинаться наша анимация и по какой оси */
+    transform: translateX(-10rem);
+  }
+
+  /* 60% {
+    ПОзволяет поворачивтаь на определенный градус
+    transform: rotate(180deg);
+  } */
+
+  /* Описываем анимацию когда положение в данном % */
+  /* положение элемента спеститься на 10 пикселей а в конце при 100% вернется на место */
+
+  80% {
+    transform: translateX(1rem);
+  }
+
+  /* Конец анимации */
+  100% {
+    /* В концу элемент будет видимый */
+    opacity: 1;
+    /* Конечное положение элемента(где будет стоять после окончания анимации) */
+    transform: translate(0);
+    /* transform: rotate(360deg); */
+  }
+}
+
+@keyframes moveInRight {
+  /* Начало анимации */
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+
+  80% {
+    transform: translateX(-1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInBottom {
+  /* Начало анимации */
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+/* Мы выравним кнопку с помощью выравнивания текста, так как там содержится текст. Но данное свойство прописываем  родительском элемента */
+/* text-align: center; */
+.btn:link,
+.btn:visited {
+  display: inline-block;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.5rem 4rem;
+  border-radius: 10rem;
+
+  /* Прописываем к чему и сколько применсять будет анимация, а ниже  сзадаем саму анимацию при помощи transform*/
+  transition: all 0.2s;
+  position: relative;
+}
+
+.btn:hover {
+  transform: translateY(-0.3rem);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(-0.1rem);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.btn--white {
+  background-color: #fff;
+  color: #777;
+}
+
+/* Делаем анимацию при помощи псевдоэлемента
+Псевдоэлементу нужно всегда прописывать свойство content: ""; хотя бы пустое */
+.btn::after {
+  content: "";
+  display: inline-block;
+  /* Псевдоэлемент примет 100% от родительского элемента */
+  height: 100%;
+  width: 100%;
+  border-radius: 10rem;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* z-index: -1;
+} Ставим данное свойсвто чтобы было позади основной кнопки*/
+  z-index: -1;
+
+  transition: all 0.4s;
+}
+
+.btn--white::after {
+  background-color: #fff;
+}
+
+/* При наведении будет рабоать псевдоэлемент */
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+.btn--animated {
+  animation: moveInBottom 0.5s ease-out 0.75s;
+  /* CSS свойство animation-fill-mode определяет, как нужно применять стили к объекту анимации до и после её выполнения. */
+  animation-fill-mode: backwards;
+}

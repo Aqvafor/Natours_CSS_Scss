@@ -1,0 +1,275 @@
+.popup {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba($color-black, 0.8);
+  z-index: 3000;
+  // Прячем текст и все отслальное
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  // position: relative;
+
+  // Чтобы понять поддерживается данное свойство браузером можно использовать @supports для теста
+  // То есть если данные свойства поддерживаются то они примутся, а если нет то примется, то что было прописано раньше
+  @supports (--webkit-backdrop-filter: blur(10px)) or(backdrop-filter: blur(10px)){
+    --webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba($color-black, 0.3);
+  }
+
+
+  // @include respond(tab-land){  //width < 1200px
+  //   font-size: 60%; // Здесь допустим хотим чтобы 1 rem =9px, 9/16=56.25%%
+  // }
+  // @include respond(tab-port){ //width < 900px
+  //   font-size: 50%; // Здесь допустим хотим чтобы 1 rem =8px, 8/16=50%
+  // }
+  // // Может изза этого тупит 
+  // @include respond(phone){
+  //   font-size: 30%; //1rem =4.8px
+  // }
+  
+  &__content {
+    @include absolutCentr;
+    width: 75%;
+    //Вначале определяем высоту для тестаphonk
+    // height: 50rem;
+    background-color: $color-white;
+    box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
+    border-radius: 3px;
+    // Вместо использования float. Мы можем использовать display: table-
+    display: table;
+    // Чтобы картинки не выходили за контейнер
+    overflow: hidden;
+
+    // Уменьшаем popup для последующей анимации увеличения  
+    opacity: 0;
+    // Так как в миксине уже есть свойство transform а они не должны применяться, мы пишем опять то свойство и добавляем новое
+    transform: translate(-50%,-50%) scale(0);
+    // 4 временное значение у transition это delay- это время задержки 
+    transition: all .5s .2s;
+  }
+
+  // ВА здесь нужно  использовать display: table-cell
+  // И тогда текст станем равным по высоте как и столбк с картинками
+  &__left {
+    width: 33.33333%;
+    // float: left;
+    display: table-cell;
+  }
+  
+  // Теперь мы выровнили вертикально в центре текст
+  &__right {
+    width: 66.66667%;
+    // float: left;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 3rem 5rem;
+  }
+  
+  &__img {
+    display: block;
+    width: 100%;
+  }
+  
+  // Распределяем текст на две колонки
+  &__text {
+    font-size: 1.4rem;
+    margin-bottom: 4rem;
+   
+  }
+
+
+  ///OPEN STATES - открытое состояние 
+  /// 
+  
+  // Когда мы добавили в popup id и в другиче якорные элементы переход к нему, то при нажатии будет переходить переход к этому элементу и все будет становиться видимым
+  &:target {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  // Делаем анимацию на открывание popup . Когда popup снатет target то откроется его дочерний элемент
+  &:target &__content{
+    //  Теперь увелииваем popup 
+    // Делаем его видимым 
+    opacity: 1;
+    // Так как в миксине уже есть свойство transform а они не должны применяться, мы пишем опять то свойство и добавляем новое
+    // Вовзращаем значение scale к единице -1 
+    transform: translate(-50%,-50%) scale(1);
+  }
+  
+  //При нажатии на кнопку, popup перестанет быть таргетом и следовательно снова элементы скроются
+  &__close {
+    //Так как у __content есть через миксин позишон абсолют нам не нужно прикреплять релатив
+    &:link,
+    &:visited {
+      color: $color-grey-dark;
+      position: absolute;
+      top: 2.5rem;
+      right: 2.5rem;
+      font-size: 3rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all .2s;
+  // Изменяем значение длины , так как у элемента кретика оно длиное изначально.И поэтому курсор наводился на элемент чуть раьше положенного
+      line-height: 1;
+    }
+  
+    &:hover{
+    color: $color-primary;
+    }
+  }
+  @media(min-width:1381px){
+    &__text{
+       
+    //  Без прификсов мозила не бдует работать
+    --moz-column-count: 2;
+    --moz-column-gap: 4rem;
+    --moz-column-rule: 1px solid $color-grey-light-2;
+    
+    //  Создаем 2 колонки с помощьб свойства  column-count: 2;
+    column-count: 2;
+    column-gap: 4rem; // 1em = 14px Зависит от font-size текущего элемента
+    //  Создаем разделяющую полоску между колонками s
+    column-rule: 1px solid $color-grey-light-2;
+    
+    //  Свойство отвечающие за перенос текста
+    // Делаем для всех брузеров
+    --moz-hyphens: auto;
+    --ms-hyphens: auto;
+    --webkit-hyphens: auto;
+    hyphens: auto;
+    }
+  }
+
+  @media (min-width:901px)  and (max-width:1380px){
+
+    // &__img{
+    //   width: 50% !important;
+    // }
+    // &__left {
+    //   display: block !important; 
+    //   width: 55% !important;
+    //   margin: 0 auto;
+    // }
+    
+    // // Теперь мы выровнили вертикально в центре текст
+    // &__right {
+    //   display: block !important;
+    //   width: 100% !important;
+    //    // vertical-align: midd900le;
+    //    padding: 1.5rem auto !important;
+    //    margin: 0 auto;
+    // }
+&__content{
+  display: block !important;
+}
+h2{
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem !important;
+}
+h3{
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem !important;
+}
+
+.btn{
+  padding: 0.5rem 1.5rem;
+}
+
+&__left{
+  display: table-cell;
+  width: 50%;
+}
+
+//     &__left:first-child {
+// // margin: 0 auto !important;
+//       width: 49% !important;
+//       // float: left;
+//       // display: table-cell;
+//       float: left;
+//     }
+
+//     &__left:last-child{
+//       float: right;
+//       // margin: 0 auto !important;
+//        width: 51% !important;
+//     }
+    
+    // Теперь мы выровнили вертикально в центре текст
+    
+    &__right {
+      // float: right;
+      // width: 50% !important;
+      // float: left;
+      display: table-cell;
+      // vertical-align: middle;
+      // display: block !important;
+      // display: block;
+      width: 50% !important;
+      padding:  auto !important;
+    }
+   
+
+    
+       
+        &__text {
+          font-size: 1.2rem !important;
+          margin-bottom: 1rem !important;
+      
+        }
+  
+      }
+  
+
+  @media (max-width:900px) and (min-width:325px) {
+    &__left {
+      display: block !important; 
+      width: 75% !important;
+      margin: 0 auto;
+    }
+    
+    // Теперь мы выровнили вертикально в центре текст
+    &__right {
+      display: block !important;
+      width: 100% !important;
+       // vertical-align: midd900le;
+       padding: 1.5rem auto !important;
+       margin: 0 auto;
+  
+    }
+    &__text {
+      font-size: 1.4rem !important;
+      margin-bottom: 4rem !important;
+  
+    }
+  }
+
+@include respond(phone){
+
+  &__left {
+    display: block !important; 
+    width: 100% !important;
+  }
+  
+  // Теперь мы выровнили вертикально в центре текст
+  &__right {
+    display: block !important;
+    width: 100% !important;
+     // vertical-align: middle;
+     padding: 3rem 5rem;
+
+  }
+  &__text {
+    font-size: 1.4rem !important;
+    margin-bottom: 4rem !important;
+
+  }
+}
+
+
+}

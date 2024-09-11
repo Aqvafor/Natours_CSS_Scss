@@ -1,0 +1,124 @@
+.form {
+  &__group:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  &__input {
+    font-size: 1.5rem;
+    // Так как изначально инпуты идут по настройкам браузера
+    font-family: inherit;
+    color: inherit;
+    padding: 1.5rem 2rem;
+    border-radius: 2px;
+    background-color: rgba($color-white, 0.5);
+    // Убираем бордер
+    border: none;
+    border-bottom: 3px solid transparent;
+    width: 90%;
+    display: block;
+    // Анимируем появления цветной рамки снизу
+    transition: all 0.3s;
+
+    @include respond(tab-port){
+      width: 100%;
+    }
+
+    &:focus {
+      // Отменяем значения фокуса по умолчанию в браузере
+      outline: none;
+      //  Всегда прописываем для доступности чтобы можно было нажимать табом
+      box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+      border-bottom: 3px solid $color-primary;
+      // &:invalid{
+      //   border-bottom: 3px $color-secondary-dark;
+      // }
+    }
+
+    // Когда поле email будет неправильно заполенено или имя не заполнено вооьщще
+    &:focus:invalid {
+      border-bottom: 3px solid $color-secondary-dark;
+    }
+
+    // Используем новый элемент
+    &::-webkit-input-placeholder {
+      color: $color-grey-dark-2;
+    }
+  }
+
+  &__label {
+    // Подстраиваем label под placeholderami в инпутах
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-left: 2rem;
+    margin-top: 0.7rem;
+    display: block;
+    transition: all 0.3s;
+  }
+
+  // + adjansed sibiling selector То есть мы вибыриаем первого последующего   родствиника родительского элемента .Это не будет работать если имеется пустое место
+  // ~ используем коггда есть несколько родственников, а нам надо нуйти нужный элемент
+  &__input:placeholder-shown + &__label {
+    // Когда мы используем opacity: 0; элемент будет прозрачным
+    opacity: 0;
+    // Мы используем opacity когда хотим использовать visibility: hidden; потому что, visibility: hidden; нельзя анимироватью И мы будем это делать через opacity
+    // а если мы используем visibility: hidden; то элемент пропадет
+    visibility: hidden;
+    transform: rotateY(-4rem);
+  }
+
+  &__radio-group {
+    width: 49%;
+    display: inline-block;
+
+@include respond(tab-port){
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+  }
+
+  // Убираем стандартные радиокнопки
+  &__radio-input{
+    display: none;
+  }
+
+  &__radio-label {
+    font-size: $default-font-size;
+    cursor: pointer;
+    position: relative;
+    padding-left: 5rem;
+  }
+
+  &__radio-button {
+    height: 3rem;
+    width: 3rem;
+    border: 5px solid $color-primary;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: -0.4rem;
+    // Создадим внутри кружка жирную точку показывающую что выбрана данная кнопка.  C помощью псевдоэлемента
+    &::after {
+      content: "";
+      display: block;
+      height: 1.3rem;
+      width: 1.3rem;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      background-color: $color-primary;
+// Делаем внутри кнопок кружки изначально прозрачными  
+      opacity: 0;
+transition: opacity .2s;
+    }
+  }
+
+  // Мы выбираем инпут у которых состояние cheked 
+  //  И с помощью родственика ~  &__radio-label  и обращаемся к его дочерниму элементу &__radio-button::after{
+  &__radio-input:checked ~ &__radio-label &__radio-button::after{
+opacity: 1;
+  }
+}
